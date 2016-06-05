@@ -8,6 +8,8 @@ import messagesClient = require('./clients/Messages');
 import notificationsClient = require('./clients/NotificationsSubscriptionAPI');
 import presenceClient = require('./clients/Presence');
 import ringoutClient = require('./clients/RingOut');
+import forwardingNumbersClient = require('./clients/ForwardingNumbers');
+import blockedNumbersClient = require('./clients/blockedNumbers');
 
 class Client {
 
@@ -22,6 +24,8 @@ class Client {
     private _notifications:notificationsClient.NotificationsSubscriptionAPI;
     private _presence:presenceClient.Presence;
     private _ringout:ringoutClient.RingOut;
+    private _forwardingNumbers:forwardingNumbersClient.ForwardingNumbers;
+    private _blockedNumbers:blockedNumbersClient.BlockedNumbers;
 
     constructor(sdk) {
 
@@ -35,6 +39,8 @@ class Client {
         this._notifications = new notificationsClient.NotificationsSubscriptionAPI(sdk);
         this._presence = new presenceClient.Presence(sdk);
         this._ringout = new ringoutClient.RingOut(sdk);
+        this._forwardingNumbers = new forwardingNumbersClient.ForwardingNumbers(sdk);
+        this._blockedNumbers = new blockedNumbersClient.BlockedNumbers(sdk);
 
     }
 
@@ -46,6 +52,8 @@ class Client {
     notifications() { return this._notifications; }
     presence() { return this._presence; }
     ringout() { return this._ringout; }
+    forwardingNumbers() { return this._forwardingNumbers; }
+    blockedNumbers() { return this._blockedNumbers; }
 
 }
 

@@ -71,6 +71,8 @@ var messagesClient = __webpack_require__(77);
 var notificationsClient = __webpack_require__(84);
 var presenceClient = __webpack_require__(87);
 var ringoutClient = __webpack_require__(93);
+var forwardingNumbersClient = __webpack_require__(96);
+var blockedNumbersClient = __webpack_require__(99);
 var Client = (function () {
     function Client(sdk) {
         this._sdk = sdk;
@@ -82,6 +84,8 @@ var Client = (function () {
         this._notifications = new notificationsClient.NotificationsSubscriptionAPI(sdk);
         this._presence = new presenceClient.Presence(sdk);
         this._ringout = new ringoutClient.RingOut(sdk);
+        this._forwardingNumbers = new forwardingNumbersClient.ForwardingNumbers(sdk);
+        this._blockedNumbers = new blockedNumbersClient.BlockedNumbers(sdk);
     }
     Client.prototype.account = function () { return this._account; };
     Client.prototype.callLog = function () { return this._callLog; };
@@ -91,6 +95,8 @@ var Client = (function () {
     Client.prototype.notifications = function () { return this._notifications; };
     Client.prototype.presence = function () { return this._presence; };
     Client.prototype.ringout = function () { return this._ringout; };
+    Client.prototype.forwardingNumbers = function () { return this._forwardingNumbers; };
+    Client.prototype.blockedNumbers = function () { return this._blockedNumbers; };
     Client.version = '0.1.0';
     return Client;
 }());
@@ -7212,6 +7218,656 @@ var RingOutStatusInfoCallerStatus = exports.RingOutStatusInfoCallerStatus;
     RingOutStatusInfoCalleeStatus[RingOutStatusInfoCalleeStatus["NoSuchUser"] = 'NoSuchUser'] = "NoSuchUser";
 })(exports.RingOutStatusInfoCalleeStatus || (exports.RingOutStatusInfoCalleeStatus = {}));
 var RingOutStatusInfoCalleeStatus = exports.RingOutStatusInfoCalleeStatus;
+
+
+/***/ },
+/* 96 */
+/***/ function(module, exports, __webpack_require__) {
+
+/// <reference path="../externals.d.ts" />
+"use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var client = __webpack_require__(3);
+var extensionforwardingnumberlist = __webpack_require__(97);
+var forwardingnumberinfo = __webpack_require__(98);
+var ForwardingNumbers = (function (_super) {
+    __extends(ForwardingNumbers, _super);
+    function ForwardingNumbers() {
+        _super.apply(this, arguments);
+    }
+    /**
+     * Get Extension Forwarding Number List
+     *
+     * <p style='font-style:italic;'>Since 1.0.7 (Release 5.16)</p>
+     * <p>Returns the list of extension phone numbers used for call forwarding and call flip. The returned list contains all the extension phone numbers that are used for call forwarding and call flip.</p>
+     * <h4>Required Permissions</h4>
+     * <table class='fullwidth'>
+     *     <thead>
+     *         <tr>
+     *             <th>Permission</th>
+     *             <th>Description</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td class='code'>ReadAccounts</td>
+     *             <td>Viewing user account info (including name, business name, address and phone number/account number)</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * <h4>API Group</h4>
+     * <p>Light</p>
+     */
+    ForwardingNumbers.prototype.listExtensionForwardingNumbers = function (options) {
+        return this.send(this.parseOptions('GET', '/restapi/v1.0/account/{accountId}/extension/{extensionId}/forwarding-number', options, exports.listExtensionForwardingNumbersOptions), extensionforwardingnumberlist.ExtensionForwardingNumberList);
+    };
+    /**
+     * Create Forwarding Number
+     *
+     * <p style='font-style:italic;'>Since 1.0.12 (Release 6.4)</p>
+     * <p>Adds a new forwarding number to the forwarding number list.</p>
+     * <h4>Required Permissions</h4>
+     * <table class='fullwidth'>
+     *     <thead>
+     *         <tr>
+     *             <th>Permission</th>
+     *             <th>Description</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td class='code'>EditExtensions</td>
+     *             <td>Viewing and updating user extension info (includes extension name, number, email and phone number, assigned phone numbers, devices and other extension settings)</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * <h4>API Group</h4>
+     * <p>Medium</p>
+     */
+    ForwardingNumbers.prototype.createExtensionForwardingNumber = function (options) {
+        return this.send(this.parseOptions('POST', '/restapi/v1.0/account/{accountId}/extension/{extensionId}/forwarding-number', options, exports.createExtensionForwardingNumberOptions), forwardingnumberinfo.ForwardingNumberInfo);
+    };
+    /**
+     * Update Forwarding Number by ID
+     *
+     * <p style='font-style:italic;'>Since 1.0.24 (Release 8.0)</p>
+     * <p>Updates an existent forwarding number from the forwarding number list.</p>
+     * <h4>Required Permissions</h4>
+     * <table class='fullwidth'>
+     *     <thead>
+     *         <tr>
+     *             <th>Permission</th>
+     *             <th>Description</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td class='code'>EditExtensions</td>
+     *             <td>Viewing and updating user extension info (includes extension name, number, email and phone number, assigned phone numbers, devices and other extension settings)</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * <h4>API Group</h4>
+     * <p>Medium</p>
+     */
+    ForwardingNumbers.prototype.updateExtensionForwardingNumber = function (options) {
+        return this.send(this.parseOptions('PUT', '/restapi/v1.0/account/{accountId}/extension/{extensionId}/forwarding-number/{forwardingNumberId}', options, exports.updateExtensionForwardingNumberOptions), forwardingnumberinfo.ForwardingNumberInfo);
+    };
+    /**
+     * Delete Forwarding Number by ID
+     *
+     * <p style='font-style:italic;'>Since 1.0.24 (Release 8.0)</p>
+     * <p>Deletes a forwarding number from the forwarding number list by its ID.</p>
+     * <h4>Required Permissions</h4>
+     * <table class='fullwidth'>
+     *     <thead>
+     *         <tr>
+     *             <th>Permission</th>
+     *             <th>Description</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td class='code'>EditExtensions</td>
+     *             <td>Viewing and updating user extension info (includes extension name, number, email and phone number, assigned phone numbers, devices and other extension settings)</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * <h4>API Group</h4>
+     * <p>Medium</p>
+     */
+    ForwardingNumbers.prototype.deleteExtensionForwardingNumber = function (options) {
+        return this.send(this.parseOptions('DELETE', '/restapi/v1.0/account/{accountId}/extension/{extensionId}/forwarding-number/{forwardingNumberId}', options, exports.deleteExtensionForwardingNumberOptions), null);
+    };
+    return ForwardingNumbers;
+}(client.Client));
+exports.ForwardingNumbers = ForwardingNumbers;
+/**
+ * Definition of options for listExtensionForwardingNumbers operation
+ */
+exports.listExtensionForwardingNumbersOptions = [
+    {
+        "name": "accountId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "extensionId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "page",
+        "type": "number",
+        "in": "query",
+        "required": false
+    },
+    {
+        "name": "perPage",
+        "type": "number",
+        "in": "query",
+        "required": false
+    }
+];
+/**
+ * Definition of options for createExtensionForwardingNumber operation
+ */
+exports.createExtensionForwardingNumberOptions = [
+    {
+        "name": "accountId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "extensionId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "body",
+        "in": "body",
+        "required": true,
+        "type": "createforwardingnumberrequest.CreateForwardingNumberRequest"
+    }
+];
+/**
+ * Definition of options for updateExtensionForwardingNumber operation
+ */
+exports.updateExtensionForwardingNumberOptions = [
+    {
+        "name": "accountId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "extensionId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "forwardingNumberId",
+        "type": "string",
+        "in": "path",
+        "required": true
+    },
+    {
+        "name": "body",
+        "in": "body",
+        "required": true,
+        "type": "updateforwardingnumberrequest.UpdateForwardingNumberRequest"
+    }
+];
+/**
+ * Definition of options for deleteExtensionForwardingNumber operation
+ */
+exports.deleteExtensionForwardingNumberOptions = [
+    {
+        "name": "accountId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "extensionId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "forwardingNumberId",
+        "type": "string",
+        "in": "path",
+        "required": true
+    }
+];
+
+
+/***/ },
+/* 97 */
+/***/ function(module, exports, __webpack_require__) {
+
+/// <reference path="../externals.d.ts" />
+"use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var model = __webpack_require__(5);
+var forwardingnumberinfo = __webpack_require__(98);
+var navigationinfo = __webpack_require__(33);
+var paginginfo = __webpack_require__(32);
+var ExtensionForwardingNumberList = (function (_super) {
+    __extends(ExtensionForwardingNumberList, _super);
+    function ExtensionForwardingNumberList() {
+        _super.apply(this, arguments);
+    }
+    ExtensionForwardingNumberList.prototype.getPropertyMappings = function () {
+        return [
+            { property: 'records', Class: forwardingnumberinfo.ForwardingNumberInfo, isArray: true, isRequired: false },
+            { property: 'navigation', Class: navigationinfo.NavigationInfo, isArray: false, isRequired: false },
+            { property: 'paging', Class: paginginfo.PagingInfo, isArray: false, isRequired: false }
+        ];
+    };
+    ExtensionForwardingNumberList.prototype.getClassName = function () {
+        return 'ExtensionForwardingNumberList';
+    };
+    return ExtensionForwardingNumberList;
+}(model.Model));
+exports.ExtensionForwardingNumberList = ExtensionForwardingNumberList;
+
+
+/***/ },
+/* 98 */
+/***/ function(module, exports, __webpack_require__) {
+
+/// <reference path="../externals.d.ts" />
+"use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var model = __webpack_require__(5);
+var ForwardingNumberInfo = (function (_super) {
+    __extends(ForwardingNumberInfo, _super);
+    function ForwardingNumberInfo() {
+        _super.apply(this, arguments);
+    }
+    ForwardingNumberInfo.prototype.getPropertyMappings = function () {
+        return [
+            { property: 'id', Class: null /* string */, isArray: false, isRequired: false },
+            { property: 'uri', Class: null /* string */, isArray: false, isRequired: false },
+            { property: 'phoneNumber', Class: null /* string */, isArray: false, isRequired: false },
+            { property: 'label', Class: null /* string */, isArray: false, isRequired: false },
+            { property: 'features', Class: ForwardingNumberInfoFeatures, isArray: false, isRequired: false },
+            { property: 'flipNumber', Class: null /* number */, isArray: false, isRequired: false }
+        ];
+    };
+    ForwardingNumberInfo.prototype.getClassName = function () {
+        return 'ForwardingNumberInfo';
+    };
+    return ForwardingNumberInfo;
+}(model.Model));
+exports.ForwardingNumberInfo = ForwardingNumberInfo;
+(function (ForwardingNumberInfoFeatures) {
+    ForwardingNumberInfoFeatures[ForwardingNumberInfoFeatures["CallFlip"] = 'CallFlip'] = "CallFlip";
+    ForwardingNumberInfoFeatures[ForwardingNumberInfoFeatures["CallForwarding"] = 'CallForwarding'] = "CallForwarding";
+})(exports.ForwardingNumberInfoFeatures || (exports.ForwardingNumberInfoFeatures = {}));
+var ForwardingNumberInfoFeatures = exports.ForwardingNumberInfoFeatures;
+
+
+/***/ },
+/* 99 */
+/***/ function(module, exports, __webpack_require__) {
+
+/// <reference path="../externals.d.ts" />
+"use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var client = __webpack_require__(3);
+var blockednumberinfo = __webpack_require__(100);
+var blockednumberslist = __webpack_require__(101);
+var BlockedNumbers = (function (_super) {
+    __extends(BlockedNumbers, _super);
+    function BlockedNumbers() {
+        _super.apply(this, arguments);
+    }
+    /**
+     * Add Blocked Number
+     *
+     * <p style='font-style:italic;'></p>
+     * <p></p>
+     * <h4>Required Permissions</h4>
+     * <table class='fullwidth'>
+     *     <thead>
+     *         <tr>
+     *             <th>Permission</th>
+     *             <th>Description</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td class='code'>EditExtensions</td>
+     *             <td>Viewing and updating my extension info (includes extension name, number, email and phone number)</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * <h4>API Group</h4>
+     * <p>Medium</p>
+     */
+    BlockedNumbers.prototype.blockNumber = function (options) {
+        return this.send(this.parseOptions('POST', '/restapi/v1.0/account/{accountId}/extension/{extensionId}/blocked-number', options, exports.blockNumberOptions), blockednumberinfo.BlockedNumberInfo);
+    };
+    /**
+     * Get Blocked Number List
+     *
+     * <p style='font-style:italic;'>Since 1.0.2</p>
+     * <p>Returns the list of phone numbers which are specified by the user to block inbound calls and SMS messages.</p>
+     * <h4>Required Permissions</h4>
+     * <table class='fullwidth'>
+     *     <thead>
+     *         <tr>
+     *             <th>Permission</th>
+     *             <th>Description</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td class='code'>ReadAccounts</td>
+     *             <td>Viewing user account info (including name, business name, address and phone number/account number)</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * <h4>API Group</h4>
+     * <p>Light</p>
+     */
+    BlockedNumbers.prototype.listBlockedNumbers = function (options) {
+        return this.send(this.parseOptions('GET', '/restapi/v1.0/account/{accountId}/extension/{extensionId}/blocked-number', options, exports.listBlockedNumbersOptions), blockednumberslist.BlockedNumbersList);
+    };
+    /**
+     * Get Blocked Number(s) by ID
+     *
+     * <p style='font-style:italic;'></p>
+     * <p></p>
+     * <h4>Required Permissions</h4>
+     * <table class='fullwidth'>
+     *     <thead>
+     *         <tr>
+     *             <th>Permission</th>
+     *             <th>Description</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td class='code'>ReadAccounts</td>
+     *             <td>Viewing user account info (including name, business name, address and phone number/account number)</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * <h4>API Group</h4>
+     * <p>Light</p>
+     */
+    BlockedNumbers.prototype.loadBlockedNumber = function (options) {
+        return this.send(this.parseOptions('GET', '/restapi/v1.0/account/{accountId}/extension/{extensionId}/blocked-number/{blockedNumberId}', options, exports.loadBlockedNumberOptions), blockednumberinfo.BlockedNumberInfo);
+    };
+    /**
+     * Update Blocked Number(s) by ID
+     *
+     * <p style='font-style:italic;'></p>
+     * <p></p>
+     * <h4>Required Permissions</h4>
+     * <table class='fullwidth'>
+     *     <thead>
+     *         <tr>
+     *             <th>Permission</th>
+     *             <th>Description</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td class='code'>EditExtensions</td>
+     *             <td>Viewing and updating my extension info (includes extension name, number, email and phone number)</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * <h4>API Group</h4>
+     * <p>Medium</p>
+     */
+    BlockedNumbers.prototype.updateBlockedNumber = function (options) {
+        return this.send(this.parseOptions('PUT', '/restapi/v1.0/account/{accountId}/extension/{extensionId}/blocked-number/{blockedNumberId}', options, exports.updateBlockedNumberOptions), blockednumberinfo.BlockedNumberInfo);
+    };
+    /**
+     * Delete Blocked Number(s) by ID
+     *
+     * <p style='font-style:italic;'></p>
+     * <p></p>
+     * <h4>Required Permissions</h4>
+     * <table class='fullwidth'>
+     *     <thead>
+     *         <tr>
+     *             <th>Permission</th>
+     *             <th>Description</th>
+     *         </tr>
+     *     </thead>
+     *     <tbody>
+     *         <tr>
+     *             <td class='code'>EditExtensions</td>
+     *             <td>Viewing and updating my extension info (includes extension name, number, email and phone number)</td>
+     *         </tr>
+     *     </tbody>
+     * </table>
+     * <h4>API Group</h4>
+     * <p>Medium</p>
+     */
+    BlockedNumbers.prototype.unblockNumber = function (options) {
+        return this.send(this.parseOptions('DELETE', '/restapi/v1.0/account/{accountId}/extension/{extensionId}/blocked-number/{blockedNumberId}', options, exports.unblockNumberOptions), null);
+    };
+    return BlockedNumbers;
+}(client.Client));
+exports.BlockedNumbers = BlockedNumbers;
+/**
+ * Definition of options for blockNumber operation
+ */
+exports.blockNumberOptions = [
+    {
+        "name": "accountId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "extensionId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    }
+];
+/**
+ * Definition of options for listBlockedNumbers operation
+ */
+exports.listBlockedNumbersOptions = [
+    {
+        "name": "accountId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "extensionId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    }
+];
+/**
+ * Definition of options for loadBlockedNumber operation
+ */
+exports.loadBlockedNumberOptions = [
+    {
+        "name": "accountId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "extensionId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "blockedNumberId",
+        "type": "string",
+        "in": "path",
+        "required": true
+    }
+];
+/**
+ * Definition of options for updateBlockedNumber operation
+ */
+exports.updateBlockedNumberOptions = [
+    {
+        "name": "accountId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "extensionId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "blockedNumberId",
+        "type": "string",
+        "in": "path",
+        "required": true
+    }
+];
+/**
+ * Definition of options for unblockNumber operation
+ */
+exports.unblockNumberOptions = [
+    {
+        "name": "accountId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "extensionId",
+        "type": "string",
+        "in": "path",
+        "required": true,
+        "default": "~"
+    },
+    {
+        "name": "blockedNumberId",
+        "type": "string",
+        "in": "path",
+        "required": true
+    }
+];
+
+
+/***/ },
+/* 100 */
+/***/ function(module, exports, __webpack_require__) {
+
+/// <reference path="../externals.d.ts" />
+"use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var model = __webpack_require__(5);
+var BlockedNumberInfo = (function (_super) {
+    __extends(BlockedNumberInfo, _super);
+    function BlockedNumberInfo() {
+        _super.apply(this, arguments);
+    }
+    BlockedNumberInfo.prototype.getPropertyMappings = function () {
+        return [
+            { property: 'uri', Class: null /* string */, isArray: false, isRequired: false },
+            { property: 'id', Class: null /* string */, isArray: false, isRequired: false },
+            { property: 'name', Class: null /* string */, isArray: false, isRequired: false },
+            { property: 'phoneNumber', Class: null /* string */, isArray: false, isRequired: false }
+        ];
+    };
+    BlockedNumberInfo.prototype.getClassName = function () {
+        return 'BlockedNumberInfo';
+    };
+    return BlockedNumberInfo;
+}(model.Model));
+exports.BlockedNumberInfo = BlockedNumberInfo;
+
+
+/***/ },
+/* 101 */
+/***/ function(module, exports, __webpack_require__) {
+
+/// <reference path="../externals.d.ts" />
+"use strict";
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var model = __webpack_require__(5);
+var blockednumberinfo = __webpack_require__(100);
+var navigationinfo = __webpack_require__(33);
+var paginginfo = __webpack_require__(32);
+var BlockedNumbersList = (function (_super) {
+    __extends(BlockedNumbersList, _super);
+    function BlockedNumbersList() {
+        _super.apply(this, arguments);
+    }
+    BlockedNumbersList.prototype.getPropertyMappings = function () {
+        return [
+            { property: 'records', Class: blockednumberinfo.BlockedNumberInfo, isArray: true, isRequired: true },
+            { property: 'navigation', Class: navigationinfo.NavigationInfo, isArray: false, isRequired: true },
+            { property: 'paging', Class: paginginfo.PagingInfo, isArray: false, isRequired: true }
+        ];
+    };
+    BlockedNumbersList.prototype.getClassName = function () {
+        return 'BlockedNumbersList';
+    };
+    return BlockedNumbersList;
+}(model.Model));
+exports.BlockedNumbersList = BlockedNumbersList;
 
 
 /***/ }
